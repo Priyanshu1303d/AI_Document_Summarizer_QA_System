@@ -11,6 +11,7 @@ list_of_files = [
     ".env.example",
     "README.md",
     "requirements.txt",
+    "app.py",
     "main.py",
     "dvc.yaml",
     "Dockerfile",
@@ -31,6 +32,9 @@ list_of_files = [
     "templates/assets/.gitkeep",
     "templates/pages/chat.py",
     "templates/app.py",
+
+    "api/__init__.py",
+    "api/routes..py"
 
     "research/trial.ipynb",
     "Data"
