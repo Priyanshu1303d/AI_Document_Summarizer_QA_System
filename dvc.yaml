@@ -1,0 +1,33 @@
+stages:
+  stage_01_load:
+    cmd: python pipelines/load_docs.py
+    deps:
+      - src/AI_Document_Summarizer_QA_System/components/stage_01_document_loader.py
+      - Data
+    outs:
+      - artifacts/raw_text.json
+
+  stage_02_split:
+    cmd: python pipelines/split_text.py
+    deps:
+      - artifacts/raw_text.json
+      - src/AI_Document_Summarizer_QA_System/components/stage_02_text_splitter.py
+    outs:
+      - artifacts/chunks.json
+
+  stage_03_index:
+    cmd: python pipelines/index_store.py
+    deps:
+      - artifacts/chunks.json
+      - src/AI_Document_Summarizer_QA_System/components/stage_03_store_index.py
+    outs:
+      - artifacts/index_done.txt
+
+  stage_04_test:
+    cmd: python pipelines/test_rag.py
+    deps:
+      - artifacts/index_done.txt
+      - src/AI_Document_Summarizer_QA_System/components/stage_04_RAG.py
+      - src/AI_Document_Summarizer_QA_System/components/stage_05_Output.py
+    outs:
+      - artifacts/test_output.json

@@ -28,25 +28,22 @@ async def upload_files(files: list[UploadFile] = File(...)):
         if file.content_type != "application/pdf":
             continue
 
-        content = await file.read()
-        temp_path = f"temp_{file.filename}"
+        pdf_bytes = await file.read()
 
-        with open(temp_path, "wb") as f:
-            f.write(content)
-
-        docs = loader.load(temp_path)
-        os.remove(temp_path)
-
-        cleaned_docs = [d for d in docs if d and d.strip()]
-        if not cleaned_docs:
+        try:
+            text = loader.load_pdf_bytes(pdf_bytes)
+        except Exception as e:
             continue
 
-        all_texts.extend(cleaned_docs)
+        if text and text.strip():
+            all_texts.append(text)
 
-    if not all_texts:
-        return {"error": "No valid PDFs detected or all files were empty."}
+    if len(all_texts) == 0:
+        return {"error": "No valid PDFs detected."}
 
     chunks = splitter.split_documents(all_texts)
+
+
     indexer.add_documents(chunks)
 
     return {

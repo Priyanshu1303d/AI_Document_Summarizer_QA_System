@@ -1,0 +1,74 @@
+schema: '2.0'
+stages:
+  stage_01_load:
+    cmd: python pipelines/load_docs.py
+    deps:
+    - path: Data
+      hash: md5
+      md5: cb9957e0aa008160b508a9c0f732551f.dir
+      size: 4053839
+      nfiles: 2
+    - path: 
+        src/AI_Document_Summarizer_QA_System/components/stage_01_document_loader.py
+      hash: md5
+      md5: 6236fde9a6276f11ddce21810ee81e67
+      size: 2050
+    outs:
+    - path: artifacts/raw_text.json
+      hash: md5
+      md5: dc5b8bab8f3b2fd0cacbf9aaf121d5aa
+      size: 71720
+  stage_02_split:
+    cmd: python pipelines/split_text.py
+    deps:
+    - path: artifacts/raw_text.json
+      hash: md5
+      md5: dc5b8bab8f3b2fd0cacbf9aaf121d5aa
+      size: 71720
+    - path: 
+        src/AI_Document_Summarizer_QA_System/components/stage_02_text_splitter.py
+      hash: md5
+      md5: 1c9553d51bc5f8b30963a8bcc308a405
+      size: 1177
+    outs:
+    - path: artifacts/chunks.json
+      hash: md5
+      md5: 75cfb090d5d6c48893b167b726f625ca
+      size: 85109
+  stage_03_index:
+    cmd: python pipelines/index_store.py
+    deps:
+    - path: artifacts/chunks.json
+      hash: md5
+      md5: 75cfb090d5d6c48893b167b726f625ca
+      size: 85109
+    - path: 
+        src/AI_Document_Summarizer_QA_System/components/stage_03_store_index.py
+      hash: md5
+      md5: 8d4a6833e0ffd9a00e1003198f184185
+      size: 1768
+    outs:
+    - path: artifacts/index_done.txt
+      hash: md5
+      md5: e0aa021e21dddbd6d8cecec71e9cf564
+      size: 2
+  stage_04_test:
+    cmd: python pipelines/test_rag.py
+    deps:
+    - path: artifacts/index_done.txt
+      hash: md5
+      md5: e0aa021e21dddbd6d8cecec71e9cf564
+      size: 2
+    - path: src/AI_Document_Summarizer_QA_System/components/stage_04_RAG.py
+      hash: md5
+      md5: 4ae9a4a5de66d421de4600a9b3a317e7
+      size: 2506
+    - path: src/AI_Document_Summarizer_QA_System/components/stage_05_Output.py
+      hash: md5
+      md5: 93500df3d1aafa1cc4df26e8b9365362
+      size: 3505
+    outs:
+    - path: artifacts/test_output.json
+      hash: md5
+      md5: bc3b20e0b5b6e6cc9eef7640868e8be3
+      size: 143

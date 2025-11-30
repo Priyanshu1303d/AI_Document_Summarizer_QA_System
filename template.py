@@ -29,15 +29,16 @@ list_of_files = [
     f"src/{project_name}/utils/__init__.py",
     f"src/{project_name}/utils/prompt.py",
 
-    "templates/assets/.gitkeep",
-    "templates/pages/chat.py",
-    "templates/app.py",
-
     "api/__init__.py",
     "api/routes..py"
+    "piplines/index_store.py",
+    "piplines/load_docs.py",
+    "piplines/split_text.py",
+    "piplines/test_rag.py",
 
     "research/trial.ipynb",
-    "Data"
+    "Data",
+    "artifacts"
 ]
 
 for i in list_of_files:

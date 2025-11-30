@@ -2,39 +2,38 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 class TextSplitter:
     """
-    Splits long text or multiple documents into chunks.
-    Works with both single string or list of strings.
+    Clean + split text efficiently. Prevent chunk explosion.
     """
 
-    def __init__(self, chunk_size=800, chunk_overlap=200):
+    def __init__(self, chunk_size=1500, chunk_overlap=200):
         self.splitter = RecursiveCharacterTextSplitter(
             chunk_size=chunk_size,
             chunk_overlap=chunk_overlap,
-            separators=["\n\n", "\n", ".", " ", ""]
+            separators=["\n\n", "\n", ". ", "? ", "! ", " "],
         )
 
-    def split_text(self, text: str):
-        """
-        Splits a single document/string into chunks.
-        """
-        if not text or len(text.strip()) == 0:
-            raise ValueError("Cannot split empty text.")
+    def clean_text(self, text: str):
+        """Remove garbage empty lines, headers, whitespace blocks."""
+        text = text.strip()
+        return text if len(text) > 50 else ""  # ignore trash
 
-        chunks = self.splitter.split_text(text)
-        return chunks
+    def split_text(self, text: str):
+        text = self.clean_text(text)
+
+        if not text:
+            return []
+
+        return self.splitter.split_text(text)
 
     def split_documents(self, docs):
-        """
-        Accepts:
-        - a single string (1 document)
-        - a list of strings (multiple documents)
-        """
         if isinstance(docs, str):
             docs = [docs]
 
         all_chunks = []
         for doc in docs:
-            chunks = self.split_text(doc)
-            all_chunks.extend(chunks)
+            cleaned = self.clean_text(doc)
+            if cleaned:
+                chunks = self.splitter.split_text(cleaned)
+                all_chunks.extend(chunks)
 
         return all_chunks
