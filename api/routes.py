@@ -20,9 +20,13 @@ formatter = OutputFormatter()
 groq_key = os.getenv("GROQ_API_KEY")
 summarizer = SummaryGenerator(groq_key)
 
+DOCUMENT_STORE = []
+
 @router.post("/upload")
 async def upload_files(files: list[UploadFile] = File(...)):
     all_texts = []
+
+
 
     for file in files:
         if file.content_type != "application/pdf":
@@ -37,6 +41,7 @@ async def upload_files(files: list[UploadFile] = File(...)):
 
         if text and text.strip():
             all_texts.append(text)
+            DOCUMENT_STORE.append(text)
 
     if len(all_texts) == 0:
         return {"error": "No valid PDFs detected."}
@@ -60,7 +65,13 @@ def ask_question(query: str):
 
 
 @router.post("/summarize")
-def summarize_document(mode: str, content: str):
+def summarize_document(mode: str):
+    # Ensure a document exists
+    if len(DOCUMENT_STORE) == 0:
+        return {"error": "No documents uploaded yet."}
+
+    content = "\n".join(DOCUMENT_STORE)
+
     if mode == "short":
         summary = summarizer.short_summary(content)
     elif mode == "medium":

@@ -29,11 +29,9 @@ export async function uploadPDF(file) {
 
         return await response.json();
     } catch (error) {
-        // If it's already our error, rethrow it
         if (error.message) {
             throw error;
         }
-        // Network or other errors
         throw new Error(`Network error: ${error.toString()}`);
     }
 }
@@ -70,15 +68,14 @@ export async function askQuestion(query) {
 }
 
 /**
- * Summarize document content
- * @param {string} content - The document content to summarize
+ * Summarize uploaded documents
  * @param {string} mode - Summary mode: 'short', 'medium', or 'detailed'
  * @returns {Promise<Object>} Response containing the summary
  */
-export async function summarizeContent(content, mode) {
+export async function summarizeContent(mode) {
     try {
         const response = await fetch(
-            `${API_BASE_URL}/summarize?mode=${encodeURIComponent(mode)}&content=${encodeURIComponent(content)}`,
+            `${API_BASE_URL}/summarize?mode=${encodeURIComponent(mode)}`,
             {
                 method: 'POST',
             }

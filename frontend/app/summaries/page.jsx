@@ -2,32 +2,25 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Sparkles } from 'lucide-react'
+import { Sparkles, FileText } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import Loader from '@/components/Loader'
 import StreamingText from '@/components/StreamingText'
 import { summarizeContent } from '@/utils/api'
 
 export default function SummariesPage() {
-    const [content, setContent] = useState('')
     const [mode, setMode] = useState('medium')
     const [summary, setSummary] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
     const handleSummarize = async () => {
-        if (!content.trim()) {
-            toast.error('Please enter some content to summarize')
-            return
-        }
-
         setIsLoading(true)
         setSummary('')
 
         try {
-            const response = await summarizeContent(content, mode)
+            const response = await summarizeContent(mode)
             const summaryText = response.summary || response.result || JSON.stringify(response)
             setSummary(summaryText)
             toast.success('Summary generated!')
@@ -57,23 +50,18 @@ export default function SummariesPage() {
                             </span>
                         </CardTitle>
                         <CardDescription className="text-base">
-                            Ask a question or enter a topic to get an AI-powered summary in your preferred detail level
+                            Generate AI-powered summaries of your uploaded documents in your preferred detail level
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
-                        {/* Input Section */}
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium">Question or Topic</label>
-                            <Textarea
-                                value={content}
-                                onChange={(e) => setContent(e.target.value)}
-                                placeholder="Enter your question or topic here... (e.g., 'What is VIT?', 'Explain machine learning')"
-                                className="min-h-[200px] resize-y"
-                                disabled={isLoading}
-                            />
-                            <p className="text-xs text-muted-foreground">
-                                {content.length} characters
-                            </p>
+                        {/* Info Section */}
+                        <div className="flex items-start gap-3 p-4 bg-primary/10 border border-primary/20 rounded-lg">
+                            <FileText className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                            <div className="flex-1">
+                                <p className="text-sm text-foreground">
+                                    This will summarize all your uploaded PDF documents. Make sure you've uploaded documents first!
+                                </p>
+                            </div>
                         </div>
 
                         {/* Mode Selection */}
@@ -90,16 +78,16 @@ export default function SummariesPage() {
                                 <option value="detailed">Detailed</option>
                             </select>
                             <p className="text-xs text-muted-foreground">
-                                {mode === 'short' && 'Quick overview with key points'}
-                                {mode === 'medium' && 'Balanced summary with main ideas'}
-                                {mode === 'detailed' && 'Comprehensive summary with details'}
+                                {mode === 'short' && '📝 Quick overview with key points (4-6 sentences)'}
+                                {mode === 'medium' && '📄 Balanced summary with main ideas (1-2 paragraphs)'}
+                                {mode === 'detailed' && '📚 Comprehensive summary with details (multiple paragraphs)'}
                             </p>
                         </div>
 
                         {/* Generate Button */}
                         <Button
                             onClick={handleSummarize}
-                            disabled={!content.trim() || isLoading}
+                            disabled={isLoading}
                             className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600"
                             size="lg"
                         >
