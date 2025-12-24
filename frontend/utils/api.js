@@ -11,31 +11,55 @@ export async function uploadPDF(file) {
     const formData = new FormData();
     formData.append('files', file);
 
+    console.log('🔍 Upload Debug Info:');
+    console.log('  - API URL:', API_BASE_URL);
+    console.log('  - Full endpoint:', `${API_BASE_URL}/upload`);
+    console.log('  - File name:', file.name);
+    console.log('  - File size:', file.size, 'bytes');
+    console.log('  - File type:', file.type);
+
     try {
+        console.log('📤 Sending POST request to:', `${API_BASE_URL}/upload`);
+
         const response = await fetch(`${API_BASE_URL}/upload`, {
             method: 'POST',
             body: formData,
         });
 
+        console.log('📥 Response received:');
+        console.log('  - Status:', response.status);
+        console.log('  - Status Text:', response.statusText);
+        console.log('  - OK:', response.ok);
+
         if (!response.ok) {
             let errorMessage = 'Upload failed';
             try {
                 const errorData = await response.json();
+                console.error('❌ Error data:', errorData);
                 errorMessage = errorData.detail || errorData.message || JSON.stringify(errorData);
             } catch (e) {
+
+                console.error('❌ Could not parse error response:', e);
                 errorMessage = `Upload failed with status ${response.status}`;
             }
             throw new Error(errorMessage);
         }
 
-        return await response.json();
+        const result = await response.json();
+        console.log('✅ Upload successful:', result);
+        return result;
     } catch (error) {
+        console.error('💥 Upload error caught:', error);
+        console.error('  - Error message:', error.message);
+        console.error('  - Error stack:', error.stack);
+
         if (error.message) {
             throw error;
         }
         throw new Error(`Network error: ${error.toString()}`);
     }
 }
+
 
 /**
  * Ask a question using the RAG system
