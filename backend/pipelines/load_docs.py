@@ -1,5 +1,5 @@
 import json
-from AI_Document_Summarizer_QA_System.components.stage_01_document_loader import DocumentLoader
+from src.AI_Document_Summarizer_QA_System.components.stage_01_document_loader import DocumentLoader
 
 loader = DocumentLoader()
 

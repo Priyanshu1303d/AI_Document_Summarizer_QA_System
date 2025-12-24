@@ -26,9 +26,6 @@ list_of_files = [
     f"src/{project_name}/components/stage_04_RAG.py",
     f"src/{project_name}/components/stage_05_Output.py",
 
-    f"src/{project_name}/utils/__init__.py",
-    f"src/{project_name}/utils/prompt.py",
-
     "api/__init__.py",
     "api/routes..py"
     "piplines/index_store.py",

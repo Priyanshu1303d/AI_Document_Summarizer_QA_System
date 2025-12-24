@@ -1,5 +1,5 @@
 import json
-from AI_Document_Summarizer_QA_System.components.stage_02_text_splitter import TextSplitter
+from src.AI_Document_Summarizer_QA_System.components.stage_02_text_splitter import TextSplitter
 
 with open("artifacts/raw_text.json", "r", encoding="utf-8") as f:
     docs = json.load(f)

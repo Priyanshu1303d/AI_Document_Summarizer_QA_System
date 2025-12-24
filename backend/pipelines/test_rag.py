@@ -1,6 +1,6 @@
 import json
-from AI_Document_Summarizer_QA_System.components.stage_04_RAG import RAGPipeline
-from AI_Document_Summarizer_QA_System.components.stage_05_Output import SummaryGenerator, OutputFormatter
+from src.AI_Document_Summarizer_QA_System.components.stage_04_RAG import RAGPipeline
+from src.AI_Document_Summarizer_QA_System.components.stage_05_Output import SummaryGenerator, OutputFormatter
 import os
 
 rag = RAGPipeline()

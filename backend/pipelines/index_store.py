@@ -1,5 +1,5 @@
 import json
-from AI_Document_Summarizer_QA_System.components.stage_03_store_index import VectorIndex
+from src.AI_Document_Summarizer_QA_System.components.stage_03_store_index import VectorIndex
 
 with open("artifacts/chunks.json", "r", encoding="utf-8") as f:
     chunks = json.load(f)

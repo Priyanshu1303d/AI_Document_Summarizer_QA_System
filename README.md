@@ -110,7 +110,6 @@ AI_Document_Summarizer_QA_System/
 │       └── logging/
 ├── api/
 │   └── routes.py                         # FastAPI Routes
-├── frontend/                             # Next.js 14 UI
 ├── templates/
 ├── app.py / main.py                      # FastAPI App Entry
 ├── dvc.yaml
@@ -127,7 +126,7 @@ AI_Document_Summarizer_QA_System/
 
 ```bash
 git clone https://github.com/Priyanshu1303d/AI_Document_Summarizer_QA_System.git
-cd AI_Document_Summarizer_QA_System
+cd AI_Document_Summarizer_QA_System/backend
 ```
 
 ### 2. Install backend dependencies

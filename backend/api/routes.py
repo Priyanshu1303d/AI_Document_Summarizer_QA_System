@@ -1,10 +1,10 @@
 import os
 from fastapi import APIRouter, UploadFile, File
-from AI_Document_Summarizer_QA_System.components.stage_01_document_loader import DocumentLoader
-from AI_Document_Summarizer_QA_System.components.stage_02_text_splitter import TextSplitter
-from AI_Document_Summarizer_QA_System.components.stage_03_store_index import VectorIndex
-from AI_Document_Summarizer_QA_System.components.stage_04_RAG import RAGPipeline
-from AI_Document_Summarizer_QA_System.components.stage_05_Output import SummaryGenerator, OutputFormatter
+from src.AI_Document_Summarizer_QA_System.components.stage_01_document_loader import DocumentLoader
+from src.AI_Document_Summarizer_QA_System.components.stage_02_text_splitter import TextSplitter
+from src.AI_Document_Summarizer_QA_System.components.stage_03_store_index import VectorIndex
+from src.AI_Document_Summarizer_QA_System.components.stage_04_RAG import RAGPipeline
+from src.AI_Document_Summarizer_QA_System.components.stage_05_Output import SummaryGenerator, OutputFormatter
 from dotenv import load_dotenv
 
 load_dotenv()

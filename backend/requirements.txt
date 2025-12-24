@@ -47,4 +47,4 @@ flask
 
 ipykernel
 
--e .
+# -e .
