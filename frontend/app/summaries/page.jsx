@@ -59,8 +59,9 @@ export default function SummariesPage() {
                             <FileText className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                             <div className="flex-1">
                                 <p className="text-sm text-foreground">
-                                    This will summarize all your uploaded PDF documents. Make sure you've uploaded documents first!
+                                    This will summarize all your uploaded PDF documents. Make sure you have uploaded documents first!
                                 </p>
+
                             </div>
                         </div>
 

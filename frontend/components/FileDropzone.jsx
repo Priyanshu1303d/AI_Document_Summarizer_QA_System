@@ -50,6 +50,7 @@ export default function FileDropzone({ onUpload }) {
             // Upload each file
             newFiles.forEach((fileObj) => uploadFile(fileObj))
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleFileInput = useCallback((e) => {
@@ -70,6 +71,7 @@ export default function FileDropzone({ onUpload }) {
             // Upload each file
             newFiles.forEach((fileObj) => uploadFile(fileObj))
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const uploadFile = async (fileObj) => {
@@ -125,8 +127,8 @@ export default function FileDropzone({ onUpload }) {
                 onDragOver={handleDrag}
                 onDrop={handleDrop}
                 className={`relative rounded-lg border-2 border-dashed transition-all ${isDragging
-                        ? 'border-primary bg-primary/5 scale-[1.02]'
-                        : 'border-muted-foreground/25 hover:border-primary/50'
+                    ? 'border-primary bg-primary/5 scale-[1.02]'
+                    : 'border-muted-foreground/25 hover:border-primary/50'
                     }`}
             >
                 <div className="flex flex-col items-center justify-center p-12 text-center">
